@@ -31,7 +31,7 @@ public class Notebook {
 
     public static String pegarNumeroSerial() {
         String idSerialCPU  = new Looca().getProcessador().getId();
-        return "SerialNumber" + idSerialCPU;
+        return idSerialCPU;
 
     }
 

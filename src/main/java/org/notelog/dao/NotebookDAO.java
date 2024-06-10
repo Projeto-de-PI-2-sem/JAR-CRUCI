@@ -15,8 +15,8 @@ public class NotebookDAO {
         ConexaoMySQL conexaoMySQL = new ConexaoMySQL();
         JdbcTemplate conMySQL = conexaoMySQL.getConexaoDoBanco();
 
-        int funcionarioExistente = 0;
-        int funcionarioJaAtrelado = 0;
+        Integer funcionarioExistente = 0;
+        Integer funcionarioJaAtrelado = 0;
 
             funcionarioExistente = conSQLServer.queryForObject("SELECT COUNT(*) FROM Funcionario WHERE fkEmpresa = ? AND id = ?", Integer.class, notebook.getFkEmpresa(), notebook.getFkFuncionario());
             funcionarioJaAtrelado = conSQLServer.queryForObject("SELECT COUNT(*) FROM Notebook JOIN Funcionario ON Funcionario.id = fkFuncionario WHERE fkFuncionario = ?", Integer.class, notebook.getFkFuncionario());
@@ -44,7 +44,6 @@ public class NotebookDAO {
             Object[] myparams = {notebook.getId(),notebook.getSistemaOperacional(), notebook.getFabricante(), notebook.getArquitetura(), notebook.getNumeroSerial(), notebook.getFkFuncionario(), notebook.getFkEmpresa()};
 
             conMySQL.update(mysql, myparams);
-
             return true;
 
         } else {

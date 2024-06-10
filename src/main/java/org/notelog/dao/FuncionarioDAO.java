@@ -53,6 +53,7 @@ public class FuncionarioDAO {
                 """;
                 Integer count = conmysql.queryForObject(sqluser, Integer.class, usuario.getFkEmpresa());
                 logger.info(usuario + "encontrado no sistema");
+
                 if (count == 0){
                     String sqlUpdate = "update Empresa set id = ? WHERE nome = 'Empresa' AND id = 1;";
                     conmysql.update(sqlUpdate, usuario.getFkEmpresa());
@@ -80,8 +81,11 @@ public class FuncionarioDAO {
 
         funcionarioJaAtrelado = consqlserver.queryForObject(sql, params, Integer.class);
 
-
-        return funcionarioJaAtrelado != null && funcionarioJaAtrelado > 0;
+        if(funcionarioJaAtrelado == null || funcionarioJaAtrelado == 0){
+            return false;
+        }else{
+            return true;
+        }
     }
 
 

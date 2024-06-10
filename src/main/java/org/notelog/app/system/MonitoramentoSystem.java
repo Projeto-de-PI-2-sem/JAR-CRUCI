@@ -21,7 +21,7 @@ import static org.notelog.service.SlackService.sendMensagemSlackRAM;
 
 public class MonitoramentoSystem {
 
-    public static void escolherMonitoramento(Funcionario usuario, Notebook notebook) throws InterruptedException {
+    public static void escolherMonitoramento(Funcionario usuario, Notebook notebook) throws InterruptedException, IOException {
         Scanner scanner = new Scanner(System.in);
 
         int opcao;
@@ -101,6 +101,8 @@ public class MonitoramentoSystem {
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
 
             System.out.println("Concluído. Digite '/exit' para sair.");
@@ -111,6 +113,8 @@ public class MonitoramentoSystem {
             escolherMonitoramento(usuario, notebook);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -142,6 +146,8 @@ public class MonitoramentoSystem {
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
 
             System.out.println("Concluído. Digite '/exit' para sair.");
@@ -152,6 +158,8 @@ public class MonitoramentoSystem {
             escolherMonitoramento(usuario, notebook);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -184,6 +192,8 @@ public class MonitoramentoSystem {
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
 
             System.out.println("Concluído. Digite '/exit' para sair.");
@@ -195,6 +205,8 @@ public class MonitoramentoSystem {
             escolherMonitoramento(usuario, notebook);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -226,6 +238,8 @@ public class MonitoramentoSystem {
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
 
             System.out.println("Concluído. Digite '/exit' para sair.");
@@ -236,6 +250,8 @@ public class MonitoramentoSystem {
             escolherMonitoramento(usuario, notebook);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -273,6 +289,8 @@ public class MonitoramentoSystem {
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
 
             System.out.println("Concluído. Digite '/exit' para sair.");
@@ -284,11 +302,13 @@ public class MonitoramentoSystem {
             escolherMonitoramento(usuario, notebook);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
     }
 
-    public static void inserirDadosNoBanco(Funcionario usuario, Notebook notebook, Boolean acaoParcial) throws InterruptedException {
+    public static void inserirDadosNoBanco(Funcionario usuario, Notebook notebook, Boolean acaoParcial) throws InterruptedException, IOException {
         // Variáveis CPU
         Integer contador = 0;
         List<Double> porcentagemUsoCPU = new ArrayList<>();
