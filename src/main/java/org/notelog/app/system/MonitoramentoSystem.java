@@ -27,7 +27,7 @@ public class MonitoramentoSystem {
         int opcao;
 
         do {
-            System.out.println("Selecione uma 'feature' abaixo:");
+            System.out.println("Digite o numero da opção desejada:");
             System.out.println("1 - Exibir informações, CPU");
             System.out.println("2 - Exibir informações, Disco(s)");
             System.out.println("3 - Exibir informações, Janela(s)");
@@ -135,6 +135,7 @@ public class MonitoramentoSystem {
             try {
                 Thread.sleep(5000);
                 System.out.println(looca.getGrupoDeDiscos().getDiscos().toString());
+                System.out.println(looca.getGrupoDeDiscos().getVolumes());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -520,5 +521,3 @@ public class MonitoramentoSystem {
     }
 
 }
-
-

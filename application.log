@@ -350,3 +350,12 @@
 09-06-2024 20:47:38[INFO]Sistema Iniciado
 09-06-2024 20:47:55[INFO]ID: 1 Nome: Jozias Duarteencontrado no sistema
 09-06-2024 20:47:55[INFO]Login bem-sucedido para o usuário:Jozias Duarte
+10-06-2024 17:37:34[INFO]Sistema Iniciado
+10-06-2024 17:38:51[INFO]ID: 1 Nome: Jozias Duarteencontrado no sistema
+10-06-2024 17:38:51[INFO]Login bem-sucedido para o usuário:Jozias Duarte
+10-06-2024 17:39:54[INFO]Inserindo informações de Tempo de Atividade no Banco de dados (SQLServer)
+10-06-2024 17:39:54[INFO]Inserindo informações de Tempo de Atividade no Banco de dados (MySQL)
+10-06-2024 17:40:02[INFO]Inserindo informações da CPU no Banco de dados (SQL Server)
+10-06-2024 17:40:02[INFO]Inserindo informações de Disco no Banco de dados (MySQL)
+10-06-2024 17:40:18[INFO]Inserindo informações de RAM no Banco de dados (SQLServer)
+10-06-2024 17:40:18[INFO]Inserindo informações de RAM no Banco de dados (MySQL)
