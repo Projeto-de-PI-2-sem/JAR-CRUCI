@@ -3,6 +3,7 @@ package org.notelog.dao;
 import com.github.britooo.looca.api.core.Looca;
 import com.github.britooo.looca.api.group.discos.Disco;
 import com.github.britooo.looca.api.group.discos.DiscoGrupo;
+import com.github.britooo.looca.api.group.discos.Volume;
 import org.notelog.model.DiscoRigido;
 import org.notelog.model.LogDisco;
 import org.notelog.util.database.ConexaoMySQL;
@@ -42,7 +43,7 @@ public class LogDiscoDAO {
 
         Object[] params = {
                 fkDiscoRigido,
-                (Long.parseLong(logDisco.getLeituras()) + Long.parseLong(logDisco.getBytesLeitura()) + Long.parseLong(logDisco.getEscritas()) + Long.parseLong(logDisco.getBytesEscritas())),
+                logDisco.getUsoDisco(),
                 dataHoraAtual()
         };
 
@@ -64,7 +65,7 @@ public class LogDiscoDAO {
         Object[] myparams = {
                 id,
                 fkDiscoRigido,
-                (Long.parseLong(logDisco.getLeituras()) + Long.parseLong(logDisco.getBytesLeitura()) + Long.parseLong(logDisco.getEscritas()) + Long.parseLong(logDisco.getBytesEscritas())),
+                logDisco.getUsoDisco(),
                 dataHoraAtual()
         };
 
@@ -92,6 +93,7 @@ public class LogDiscoDAO {
         Looca looca = new Looca();
         DiscoGrupo grupoDeDiscos = looca.getGrupoDeDiscos();
         List<Disco> discos = grupoDeDiscos.getDiscos();
+        List<Volume> volumes = grupoDeDiscos.getVolumes();
 
         ConexaoMySQL conexaoMySQL = new ConexaoMySQL();
         JdbcTemplate conmysql = conexaoMySQL.getConexaoDoBanco();
@@ -99,60 +101,60 @@ public class LogDiscoDAO {
         ConexaoSQLServer conSQLServer = new ConexaoSQLServer();
         JdbcTemplate consqlserver = conSQLServer.getConexaoDoBanco();
 
-            for (Disco disco : discos) {
-                Integer fkDiscoRigido = null;
-                Integer fkNotebook = null;
+        for (Disco disco : discos) {
+            Integer fkDiscoRigido = null;
 
-                if (disco.getSerial() == "unknown" || disco.getSerial() == "" || disco.getSerial() == null && disco.getModelo() == "unknown" || disco.getModelo() == "" || disco.getModelo() == null ){
-                    String instanceId = getInstanceMetadata("instance-id");
+            if (disco.getSerial() == "unknown" || disco.getSerial() == "" || disco.getSerial() == null && disco.getModelo() == "unknown" || disco.getModelo() == "" || disco.getModelo() == null) {
+                String instanceId = getInstanceMetadata("instance-id");
 
-                    try {
+                try {
 
-                        fkDiscoRigido = consqlserver.queryForObject("SELECT DiscoRigido.id FROM DiscoRigido WHERE DiscoRigido.serial = ?;", Integer.class, instanceId);
-                        fkNotebook = consqlserver.queryForObject("SELECT DiscoRigido.fkNotebook FROM DiscoRigido WHERE DiscoRigido.serial = ?;", Integer.class, instanceId);
+                    fkDiscoRigido = consqlserver.queryForObject("SELECT DiscoRigido.id FROM DiscoRigido WHERE DiscoRigido.serial = ?;", Integer.class, instanceId);
 
 
-                    } catch (EmptyResultDataAccessException e) {
-                        logger.warning("Nenhum disco rígido encontrado para o serial " + disco.getSerial());
-                        continue;  // Pular para o próximo disco se não encontrar nenhum resultado
-                    }
+                } catch (EmptyResultDataAccessException e) {
+                    logger.warning("Nenhum disco rígido encontrado para o serial " + disco.getSerial());
+                    continue;  // Pular para o próximo disco se não encontrar nenhum resultado
+                }
 
-                    LogDisco novoLogDiscoRigido = new LogDisco(null, disco.getLeituras().toString(),
-                            disco.getBytesDeLeitura().toString(),
-                            disco.getEscritas().toString(),
-                            disco.getBytesDeEscritas().toString());
+                Long usoDisco = 0L;
+                for (Volume volume : volumes) {
+                    usoDisco += ((volume.getTotal() - volume.getDisponivel()) / volumes.size());
+                }
+                LogDisco novoLogDiscoRigido = new LogDisco(null, usoDisco.toString());
 
-                    if (!logDiscoExiste(novoLogDiscoRigido, fkDiscoRigido)) {
-                        adicionarLogDisco(novoLogDiscoRigido, fkDiscoRigido);
-                    } else {
-                        logger.info("LogDisco já existe: " + novoLogDiscoRigido);
-                    }
-
-
+                if (!logDiscoExiste(novoLogDiscoRigido, fkDiscoRigido)) {
+                    adicionarLogDisco(novoLogDiscoRigido, fkDiscoRigido);
                 } else {
-                    try {
-
-                        fkDiscoRigido = consqlserver.queryForObject("SELECT DiscoRigido.id FROM DiscoRigido WHERE DiscoRigido.serial = ?;", Integer.class, disco.getSerial());
-                        fkNotebook = consqlserver.queryForObject("SELECT DiscoRigido.fkNotebook FROM DiscoRigido WHERE DiscoRigido.serial = ?;", Integer.class, disco.getSerial());
+                    logger.info("LogDisco já existe: " + novoLogDiscoRigido);
+                }
 
 
-                    } catch (EmptyResultDataAccessException e) {
-                        logger.warning("Nenhum disco rígido encontrado para o serial " + disco.getSerial());
-                        continue;  // Pular para o próximo disco se não encontrar nenhum resultado
-                    }
+            } else {
+                try {
 
-                    LogDisco novoLogDiscoRigido = new LogDisco(null, disco.getLeituras().toString(),
-                            disco.getBytesDeLeitura().toString(),
-                            disco.getEscritas().toString(),
-                            disco.getBytesDeEscritas().toString());
+                    fkDiscoRigido = consqlserver.queryForObject("SELECT DiscoRigido.id FROM DiscoRigido WHERE DiscoRigido.serial = ?;", Integer.class, disco.getSerial());
 
-                    if (!logDiscoExiste(novoLogDiscoRigido, fkDiscoRigido)) {
-                        adicionarLogDisco(novoLogDiscoRigido, fkDiscoRigido);
-                    } else {
-                        logger.info("LogDisco já existe: " + novoLogDiscoRigido);
+                } catch (EmptyResultDataAccessException e) {
+                    logger.warning("Nenhum disco rígido encontrado para o serial " + disco.getSerial());
+                    continue;  // Pular para o próximo disco se não encontrar nenhum resultado
+                }
+
+                Long usoDisco = 0L;
+                for (Volume volume : volumes) {
+                    if (volume.getVolume().startsWith(disco.getNome())) {
+                        usoDisco += (volume.getTotal() - volume.getDisponivel());
                     }
                 }
+                LogDisco novoLogDiscoRigido = new LogDisco(null, usoDisco.toString());
+
+                if (!logDiscoExiste(novoLogDiscoRigido, fkDiscoRigido)) {
+                    adicionarLogDisco(novoLogDiscoRigido, fkDiscoRigido);
+                } else {
+                    logger.info("LogDisco já existe: " + novoLogDiscoRigido);
+                }
             }
+        }
 
     }
 

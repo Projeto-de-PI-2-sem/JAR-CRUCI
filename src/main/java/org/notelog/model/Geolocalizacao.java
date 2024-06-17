@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Geolocalizacao {
-    private static final String API_KEY = "67B347539C3E108BEBCF238AD9683A3F";
+    private static final String API_KEY = "A7D382170F8BDDDFBA8B9DA18881FC94";
 
     @JsonAlias({"ip"})
     private String ip;

@@ -34,11 +34,14 @@ public class NotebookDAO {
 
             // MYSQL
 
-            String sqlUpdate = "update Funcionario set id = ? WHERE nome = 'Funcionario' AND id = 1";
-            conMySQL.update(sqlUpdate, notebook.getFkFuncionario());
+            String sqlUpdateEmpresa = "update Empresa set id = ? WHERE nome = 'Empresa'";
+            conMySQL.update(sqlUpdateEmpresa, notebook.getFkEmpresa());
 
-            String sqlUpdate2 = "update Funcionario set fkEmpresa = ? WHERE nome = 'Funcionario' AND id = 1";
-            conMySQL.update(sqlUpdate2, notebook.getFkEmpresa());
+            String sqlUpdateIdFuncionario = "update Funcionario set id = ? where nome = 'Funcionario'";
+            conMySQL.update(sqlUpdateIdFuncionario, notebook.getFkFuncionario());
+
+            String sqlUpdateFkEmpresa = "update Funcionario set fkEmpresa = ? WHERE nome = 'Funcionario'";
+            conMySQL.update(sqlUpdateFkEmpresa, notebook.getFkEmpresa());
 
             String mysql = "INSERT INTO Notebook (id, sistemaOperacional, fabricante, arquitetura, numeroSerial, fkFuncionario, fkEmpresa) VALUES (?, ?, ?, ?, ?, ?, ?)";
             Object[] myparams = {notebook.getId(),notebook.getSistemaOperacional(), notebook.getFabricante(), notebook.getArquitetura(), notebook.getNumeroSerial(), notebook.getFkFuncionario(), notebook.getFkEmpresa()};

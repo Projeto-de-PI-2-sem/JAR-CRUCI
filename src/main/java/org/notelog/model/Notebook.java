@@ -26,13 +26,17 @@ public class Notebook {
         this.fkEmpresa = fkEmpresa;
     }
 
-    public Notebook(){
+    public Notebook() {
     }
 
     public static String pegarNumeroSerial() {
-        String idSerialCPU  = new Looca().getProcessador().getId();
-        return idSerialCPU;
-
+        Looca looca = new Looca();
+        for (int i = 0; i < looca.getRede().getGrupoDeInterfaces().getInterfaces().size(); i++) {
+            if (looca.getRede().getGrupoDeInterfaces().getInterfaces().get(i).getNome().equals("enX0")) {
+                return looca.getRede().getGrupoDeInterfaces().getInterfaces().get(i).getEnderecoMac();
+            }
+        }
+        return looca.getRede().getGrupoDeInterfaces().getInterfaces().get(looca.getRede().getGrupoDeInterfaces().getInterfaces().size() - 1).getEnderecoMac();
     }
 
 

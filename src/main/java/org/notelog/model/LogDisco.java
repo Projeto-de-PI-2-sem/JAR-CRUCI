@@ -2,22 +2,17 @@ package org.notelog.model;
 
 import com.github.britooo.looca.api.core.Looca;
 
-public class LogDisco extends LogAbstract{
+public class LogDisco extends LogAbstract {
     Looca looca = new Looca();
     private Integer fkDiscoRigido;
-    private String leituras;
-    private String bytesLeitura;
-    private String escritas;
-    private String bytesEscritas;
+    private String usoDisco;
 
-    public LogDisco(Integer fkDiscoRigido, String leituras, String bytesLeitura, String escritas, String bytesEscritas) {
+    public LogDisco(Integer fkDiscoRigido, String usoDisco) {
 
         this.fkDiscoRigido = fkDiscoRigido;
-        this.leituras = leituras;
-        this.bytesLeitura = bytesLeitura;
-        this.escritas = escritas;
-        this.bytesEscritas = bytesEscritas;
+        this.usoDisco = usoDisco;
     }
+
 
     public Integer getFkDiscoRigido() {
         return fkDiscoRigido;
@@ -27,47 +22,19 @@ public class LogDisco extends LogAbstract{
         this.fkDiscoRigido = fkDiscoRigido;
     }
 
-    public String getLeituras() {
-        return leituras;
+    public String getUsoDisco() {
+        return usoDisco;
     }
 
-    public void setLeituras(String leituras) {
-        this.leituras = leituras;
-    }
-
-    public String getBytesLeitura() {
-        return bytesLeitura;
-    }
-
-    public void setBytesLeitura(String bytesLeitura) {
-        this.bytesLeitura = bytesLeitura;
-    }
-
-    public String getEscritas() {
-        return escritas;
-    }
-
-    public void setEscritas(String escritas) {
-        this.escritas = escritas;
-    }
-
-    public String getBytesEscritas() {
-        return bytesEscritas;
-    }
-
-    public void setBytesEscritas(String bytesEscritas) {
-        this.bytesEscritas = bytesEscritas;
+    public void setUsoDisco(String usoDisco) {
+        this.usoDisco = usoDisco;
     }
 
     @Override
     public String toString() {
-        return "org.notelog.entidades.logs.disco.LogDisco{" +
-                "idLogDisco=" + super.getId() +
+        return "LogDisco{" +
+                "usoDisco='" + usoDisco + '\'' +
                 ", fkDiscoRigido=" + fkDiscoRigido +
-                ", leituras='" + leituras + '\'' +
-                ", bytesLeitura='" + bytesLeitura + '\'' +
-                ", escritas='" + escritas + '\'' +
-                ", bytesEscritas='" + bytesEscritas + '\'' +
                 '}';
     }
 }

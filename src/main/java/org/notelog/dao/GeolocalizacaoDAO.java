@@ -9,7 +9,7 @@ public class GeolocalizacaoDAO {
     public void adicionaGeolocalizacao(Integer fkNotebook, Geolocalizacao geolocalizacao) {
         ConexaoMySQL conexaoMySQL = new ConexaoMySQL();
         JdbcTemplate conmysql = conexaoMySQL.getConexaoDoBanco();
-//
+
         ConexaoSQLServer conSQLServer = new ConexaoSQLServer();
         JdbcTemplate consqlserver = conSQLServer.getConexaoDoBanco();
 
@@ -41,12 +41,12 @@ public class GeolocalizacaoDAO {
         // MYSQL
 
         String mysql = """
-        INSERT INTO Geolocalizacao (id, enderecoIp, pais, cidade, nomeRegiao, latitude, longitude, timezone, companiaInternet, fkNotebook)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO Geolocalizacao (enderecoIp, pais, cidade, nomeRegiao, latitude, longitude, timezone, companiaInternet, fkNotebook)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
         Object[] myparams = {
-                id, geolocalizacao.getIp(), geolocalizacao.getCountryName(), geolocalizacao.getCityName(),
+                geolocalizacao.getIp(), geolocalizacao.getCountryName(), geolocalizacao.getCityName(),
                 geolocalizacao.getRegionName(), geolocalizacao.getLatitude(), geolocalizacao.getLongitude(),
                 geolocalizacao.getTimeZone(), geolocalizacao.getAs(), fkNotebook
         };
